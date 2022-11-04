@@ -1,26 +1,22 @@
-const w = window
+window.addEventListener("DOMContentLoaded", () => {
+  const contCanvas = document.querySelector(".container-canvas");
+  const canvas = document.getElementById("dibujo");
 
-w.addEventListener('DOMContentLoaded', () => {
-    const contCanvas = document.querySelector('.container-canvas')
-    const canvas = document.getElementById('dibujo')
+  newDimensions();
 
-    newDimensions()
+  window.addEventListener("resize", () => {
+    newDimensions;
+  });
 
-    w.addEventListener('resize', () => {
-        newDimensions
-    })
+  function getDimensions() {
+    const height = contCanvas.clientHeight;
+    const width = contCanvas.clientWidth;
+    return [height, width];
+  }
 
-
-    function getDimensions() {
-        const height = contCanvas.clientHeight
-        const width = contCanvas.clientWidth
-        return [height, width]
-    }
-
-    function newDimensions() {
-        const [height, width] = getDimensions()
-        canvas.setAttribute('width', width)
-        canvas.setAttribute('height', height)
-    }
-
-})
+  function newDimensions() {
+    const [height, width] = getDimensions();
+    canvas.setAttribute("width", width);
+    canvas.setAttribute("height", height);
+  }
+});
