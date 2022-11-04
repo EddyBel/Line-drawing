@@ -1,46 +1,64 @@
-let canvas = document.getElementById("dibujo");
-let lienzo = canvas.getContext("2d");
-let ancho = 500;
-// let colores = ["red", "pink", "blue", "yellow", "green"];
-let x, y;
-
+const canvas = document.getElementById("dibujo");
 const color = document.getElementById("color");
 const numero = document.getElementById("numero");
 const btn = document.getElementById("enviar");
 
+let lienzo = canvas.getContext("2d");
+let ancho = 500;
+let x, y;
+
 // Escucha el evento de click en el boton
 btn.addEventListener("click", (e) => {
-  // Limpia el canvas antes de dibujar
-  canvas.width = canvas.width;
-  // Elimina el comportamiento por defecto de refrescar la pagina
-  e.preventDefault();
-  //   Extrae los valores de los inputs
+  e.preventDefault(); // Elimina el comportamiento por defecto de refrescar la pagina
+  canvas.width = canvas.width; // Limpia el canvas antes de dibujar
+  // Extrae los valores de los inputs
   numeroLineas = numero.value;
   colorElegido = color.value;
   numero.value = "";
-  // color.value = '#fefefe';
-  //   Verificacion de numeroLineas
+  //   Verificacion de numeroLineas Si es un numero negativo vuelvelo positivo
   if (numeroLineas < 0) {
     numeroLineas = numeroLineas * -1;
   }
-  // Divide el numero para que este el total de lineas creadas
-  numeroLineas = numeroLineas / 4;
-  // Ajusta las lineas dependiendo de el numero de lineas
-  numeroDivisorio = ancho / numeroLineas;
+  numeroLineas = numeroLineas / 4; // Divide el numero para que este el total de lineas creadas
+  numeroDivisorio = ancho / numeroLineas; // Ajusta las lineas dependiendo de el numero de lineas
   //   Dibuja la figura
   dibujoEspecifico(colorElegido, numeroDivisorio, ancho);
 });
 
+/**
+ * Funcion que dibuja una linea dado una cordenada de inicio y una de final
+ * @type {Function}
+ * @param {String} color Color con el que la linea estara coloreada
+ * @param {Number} xInicial Valor de x donde iniciara la linea
+ * @param {Number} yInicial Valor de y donde iniciara la linea
+ * @param {NUmber} xFinal Valor de x donde terminara la linea
+ * @param {Number} yFinal Valor de y donde terminara la linea
+ * @return {Boolean} Si la linea se dibujo correctamente devuelve true
+ */
 // Funcion que dibuja linea con cordenadas especificadas
 function dibujaLinea(color, xInicial, yInicial, xFinal, yFinal) {
-  lienzo.beginPath();
-  lienzo.strokeStyle = color;
-  lienzo.moveTo(xInicial, yInicial);
-  lienzo.lineTo(xFinal, yFinal);
-  lienzo.stroke();
-  lienzo.closePath();
+  try {
+    lienzo.beginPath();
+    lienzo.strokeStyle = color;
+    lienzo.moveTo(xInicial, yInicial);
+    lienzo.lineTo(xFinal, yFinal);
+    lienzo.stroke();
+    lienzo.closePath();
+    return true;
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
 }
 
+/**
+ * Funcion que dibuja la figura en general dado sus parametros
+ * @type {Function}
+ * @param {String} color Color de las lineas
+ * @param {Number} numeroDivisorio Numero de ajuste para que las lineas salgan uniformes
+ * @param {Number} ancho Ancho del canvas
+ * @return {void}
+ */
 // Dibuja con los parametros
 function dibujoEspecifico(color, numeroDivisorio, ancho) {
   for (let contador = 0; contador <= numeroLineas; contador++) {
